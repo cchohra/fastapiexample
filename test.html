@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="fnTest()">Test</button>
+    <span id="accuracy"></span>
+    <br>
+    <input type="text" id="name"><button onclick="greeting()">Say Hello</button>
+    <span id="message"></span>
+</body>
+<script>
+    function fnTest() {
+        fetch('http://127.0.0.1:8000/testImage', {
+            method: 'GET'
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('accuracy').innerHTML = data.accuracy * 100 + '%';
+        })
+    }
+    function greeting() {
+        let name = document.getElementById('name').value.trim();
+        if (name === '') {
+            alert('Please enter your name');
+            return;
+        }
+        fetch('http://127.0.0.1:8000/hello/' + name, {
+            method: 'GET'
+        }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('message').innerHTML = data.message;
+        })
+    }
+</script>
+</html>
